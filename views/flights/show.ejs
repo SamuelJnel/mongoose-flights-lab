@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>FLight Details</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <ul class="nav justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link active" href="/flights">All Flights</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/flights/new">Add Flights</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="section">
+      <h2>Flight Details</h2>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Airline</th>
+            <th scope="col">Airport</th>
+            <th scope="col">Flight #</th>
+            <th scope="col">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><%=flight.airline%></th>
+            <td><%=flight.airport%></td>
+            <td><%=flight.flightNo%></td>
+            <td><%=flight.departs.toUTCString()%></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Destination</h2>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Airport</th>
+            <th scope="col">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% flight.destinations.forEach(function(el) { %>
+          <tr>
+            <th scope="row"><%=el.airport%></th>
+            <td><%=el.arrival%></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Add Destination</h2>
+      <form action="/flights/<%=flight.id%>" method="POST">
+        <label>Airport</label>
+        <select name="airport">
+          <option value="DEN">DEN</option>
+          <option value="AUS">AUS</option>
+          <option value="DFW">DFW</option>
+          <option value="LAX">LAX</option>
+          <option value="SAN">SAN</option></select
+        ><br />
+        <label>Arrival Date:</label>
+        <input type="datetime-local" value="" name="arrival" />
+        <br />
+        <input type="submit" class="btn btn-info" value="Add Destination" />
+      </form>
+    </div>
+
+    <div class="section">
+      <h2>Tickets</h2>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Seat</th>
+            <th scope="col">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% ticket.forEach(function(el) { %>
+          <tr>
+            <th><%=el.seat%></th>
+            <td>$<%=el.price%></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <div>
+        <a href="/tickets/<%=flight.id%>/tickets/new%>"
+          ><button type="button" class="btn btn-info">Add Tickets</button></a
+        >
+      </div>
+    </div>
+  </body>
+</html>
